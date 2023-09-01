@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'wallet_balance'
     ];
 
     /**
@@ -41,5 +43,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'wallet_balance' => 'decimal:2'
     ];
+
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function wallets() {
+        return $this->hasMany(Wallet::class);
+    }
 }
