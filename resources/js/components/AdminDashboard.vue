@@ -1,58 +1,61 @@
 <template>
-    <div>
-        <div class="w-10/12 m-auto mt-10 overflow-x-auto shadow-md sm:rounded-lg">
-            <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-            >
-                <thead
-                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-                >
-                    <tr>
-                        <th scope="col" class="px-6 py-3">Nom</th>
-                        <th scope="col" class="px-6 py-3">Email</th>
-                        <th scope="col" class="px-6 py-3">Portefeuille</th>
-                        <th scope="col" class="px-6 py-3"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        v-for="item in list"
-                        :key="list.id"
-                        @click="goToClientDetails(item.id)"
-                    >
-                        <th
-                            scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        >
-                            {{ item.name }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ item.email }}
-                        </td>
-                        <td class="px-6 py-4">{{ item.wallet_balance }} €</td>
-                        <td class="px-6 py-4 text-right">
-                            <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" @click.stop="deleteClient(item.id)">
-                                Supprimer
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="flex justify-center pt-2">
-            <button
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
-            >
-                <span
-                    class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
-                >
-                    <a href="/admin/create-client" class="button"
-                        >Ajouter un client</a
-                    >
-                </span>
-            </button>
-        </div>
+        <div class="bg-gray-100 h-screen flex">
+      <SidebarComponent class="lg:w-64" />
+      <div class="flex overflow-y-auto p-4 mx-auto flex-col lg:mt-5">
+          <div class="m-auto mt-10 overflow-x-auto shadow-md sm:rounded-lg">
+              <table
+                  class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
+                  <thead
+                      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                  >
+                      <tr>
+                          <th scope="col" class="px-6 py-3">Nom</th>
+                          <th scope="col" class="px-6 py-3">Email</th>
+                          <th scope="col" class="px-6 py-3">Portefeuille</th>
+                          <th scope="col" class="px-6 py-3"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr
+                          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          v-for="item in list"
+                          :key="list.id"
+                          @click="goToClientDetails(item.id)"
+                      >
+                          <th
+                              scope="row"
+                              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                              {{ item.name }}
+                          </th>
+                          <td class="px-6 py-4">
+                              {{ item.email }}
+                          </td>
+                          <td class="px-6 py-4">{{ item.wallet_balance }} €</td>
+                          <td class="px-6 py-4 text-right">
+                              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" @click.stop="deleteClient(item.id)">
+                                  Supprimer
+                              </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="flex justify-center pt-2">
+              <button
+                  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+              >
+                  <span
+                      class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                  >
+                      <a href="/admin/create-client" class="button"
+                          >Ajouter un client</a
+                      >
+                  </span>
+              </button>
+          </div>
+      </div>
         <!-- <h1 class="text-white">Tableau de bord Admin</h1>
         <div>
             <table class="table-auto">
@@ -80,7 +83,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import SidebarComponent from "./SidebarComponent.vue";
 
 export default {
     data() {
@@ -115,5 +118,6 @@ export default {
                 });
         },
     },
+    components: { SidebarComponent },
 };
 </script>

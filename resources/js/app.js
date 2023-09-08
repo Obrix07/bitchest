@@ -10,6 +10,7 @@ import CreateClient from './components/CreateClient.vue';
 import DashboardComponent from './components/DashboardComponent.vue';
 import CryptoList from './components/CryptoList.vue';
 import CryptoDetail from './components/CryptoDetail.vue';
+import SidebarComponent from './components/SidebarComponent.vue';
 
 // import VueApexCharts from 'vue-apexcharts'
 import VueApexCharts from "vue3-apexcharts";
@@ -27,6 +28,7 @@ const app = createApp({
       CryptoList,
       CryptoDetail,
       VueApexCharts,
+      SidebarComponent,
     },
   });
 
