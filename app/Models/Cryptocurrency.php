@@ -15,7 +15,7 @@ class Cryptocurrency extends Model
     ];
 
     public function values() {
-        return $this->hasMany(CryptoValue::class);
+        return $this->hasMany(CryptoValues::class);
     }
 
     public function transactions() {

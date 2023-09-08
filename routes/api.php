@@ -11,6 +11,14 @@ Route::post('clients', [AdminController::class, 'createClient']);
 Route::delete('clients/{id}', [AdminController::class, 'deleteClient']);
 
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/client/dashboard', [ClientController::class, 'showDashboardData']);
+    Route::get('/all-cryptos', [ClientController::class, 'getAllCryptos']);
+    Route::get('/crypto-values/{id}', [CryptoController::class, 'getValues']);
+
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes

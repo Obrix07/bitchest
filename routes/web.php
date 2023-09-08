@@ -3,7 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CryptoController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +23,15 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
     
 });
 
@@ -45,13 +49,33 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     });
 });
 
-// // Routes pour les clients
-// Route::middleware(['auth:sanctum', 'role:client'])->group(function () {
-//     Route::get('profile', [ClientController::class, 'getProfile']);
-//     Route::get('wallet', 'ClientController@getWallet');
-//     Route::post('transactions/buy', 'ClientController@buyCrypto');
-//     Route::post('transactions/sell', 'ClientController@sellCrypto');
+// Routes pour les clients
+Route::middleware(['auth:sanctum', 'role:client'])->group(function () {
+    Route::get('/', function () {
+        return view('dashboard');
+    });
+    Route::get('/list', function () {
+        return view('crypto-list');
+    });
+    Route::post('/api/buy-crypto', [ClientController::class, 'buyCrypto']);
+    Route::post('/api/sell-crypto', [ClientController::class, 'buyCrypto']);
+    Route::post('/api/sell-crypto', [ClientController::class, 'sellCrypto']);
+    Route::get('/api/get-buying-price/{cryptoName}', [ClientController::class, 'getBuyingPrice']);
+    Route::get('/api/current-price/{cryptoName}', [ClientController::class, 'getCurrentPrice']);
+    Route::get('/crypto/{id}', [CryptoController::class, 'showDetail']);
+    Route::get('/crypto/{id}', [CryptoController::class, 'show'])->name('crypto.show');
+    Route::get('/crypto/{id}', [CryptoController::class, 'showCryptoDetail']);
+
+
+
+
+});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     $user = $request->user();
+//     dd($user->email);
 // });
+
+
 
 
 require __DIR__.'/auth.php';

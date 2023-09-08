@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +10,7 @@
 </head>
 <body>
     <div id="app">
-        <dashboard-component/>
+        <crypto-list/>
     </div>
 </body>
 </html>

@@ -26,6 +26,6 @@ class Transaction extends Model
     }
 
     public function cryptoValue() {
-        return $this->belongsTo(CryptoValue::class, 'cryptovalues_id');
+        return $this->belongsTo(CryptoValues::class, 'cryptovalues_id');
     }
 }
