@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen flex">
-        <SidebarComponent class="lg:w-64" />
+        <AdminSidebar class="lg:w-64" />
         <div class="flex flex-col m-auto text-center justify-center">
             <h2 class="my-5 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-lime-600 from-sky-400">Liste des Cryptos</span></h2>
             <table class="mt-4">
@@ -17,7 +17,6 @@
                                 <th scope="col" class="px-6 py-3">
                                     Dernière Valeur
                                 </th>
-                                <th scope="col" class="px-6 py-3">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,24 +38,9 @@
                                 <td class="px-6 py-4">
                                     {{ crypto.latest_value }}
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button 
-                                        @click.stop="openModal(crypto)"
-                                        class="font-medium text-lime-600 hover:underline"
-                                    >
-                                        Acheter
-                                    </button>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                
-                <div v-if="showModal">
-                    Combien de {{ currentCrypto.name }} souhaitez-vous acheter ?
-                    <input type="number" v-model="quantity" min="0" step="0.01" />
-                    <button @click="buyCrypto">Confirmer</button>
-                    <button @click="showModal = false">Annuler</button>
                 </div>
             </table>
         </div>
@@ -64,6 +48,7 @@
 </template>
 
 <script>
+import AdminSidebar from "./AdminSidebar.vue";
 import SidebarComponent from "./SidebarComponent.vue";
 export default {
     data() {
@@ -75,32 +60,8 @@ export default {
         };
     },
     methods: {
-        openModal(crypto) {
-            this.currentCrypto = crypto;
-            this.showModal = true;
-        },
         goToCryptoDetail(cryptoId) {
-            window.location.href = `/crypto/${cryptoId}`;
-        },
-        buyCrypto() {
-            if (this.quantity <= 0) {
-                alert("Veuillez entrer une quantité valide.");
-                return;
-            }
-            axios
-                .post("/api/buy-crypto", {
-                    cryptoId: this.currentCrypto.id,
-                    quantity: this.quantity,
-                })
-                .then((response) => {
-                    this.showModal = false;
-                })
-                .catch((error) => {
-                    console.error(
-                        "Une erreur est survenue lors de l'achat:",
-                        error
-                    );
-                });
+            window.location.href = `/admin/crypto/${cryptoId}`;
         },
     },
     mounted() {
@@ -108,6 +69,6 @@ export default {
             this.cryptos = response.data;
         });
     },
-    components: { SidebarComponent },
+    components: { SidebarComponent, AdminSidebar },
 };
 </script>

@@ -9,7 +9,9 @@ import ClientDetails from './components/ClientDetails.vue';
 import CreateClient from './components/CreateClient.vue';
 import DashboardComponent from './components/DashboardComponent.vue';
 import CryptoList from './components/CryptoList.vue';
-import CryptoDetail from './components/CryptoDetail.vue';
+import AdminCryptoList from './components/AdminCryptoList.vue';
+import CryptoDetail from './components/AdminCryptoDetail.vue';
+import AdminCryptoDetail from './components/CryptoDetail.vue';
 import SidebarComponent from './components/SidebarComponent.vue';
 
 // import VueApexCharts from 'vue-apexcharts'
@@ -26,7 +28,9 @@ const app = createApp({
       CreateClient,
       DashboardComponent,
       CryptoList,
+      AdminCryptoList,
       CryptoDetail,
+      AdminCryptoDetail,
       VueApexCharts,
       SidebarComponent,
     },

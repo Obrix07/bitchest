@@ -37,4 +37,8 @@ public function showCryptoDetail($id) {
     $crypto = Cryptocurrency::with('values')->findOrFail($id);
     return view('crypto-detail', ['crypto' => $crypto]);
 }
+public function showCryptoDetailAdmin($id) {
+    $crypto = Cryptocurrency::with('values')->findOrFail($id);
+    return view('crypto-detail', ['crypto' => $crypto]);
+}
 }

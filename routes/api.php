@@ -9,6 +9,7 @@ Route::get('clients', [AdminController::class, 'getClients']);
 Route::put('clients/{id}', [AdminController::class, 'updateClient']);
 Route::post('clients', [AdminController::class, 'createClient']);
 Route::delete('clients/{id}', [AdminController::class, 'deleteClient']);
+Route::get('/all-cryptos', [AdminController::class, 'getAllCryptos']);
 
 
 Route::middleware('auth:sanctum')->group(function () {

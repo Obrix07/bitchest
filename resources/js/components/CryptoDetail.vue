@@ -1,17 +1,15 @@
 <template>
-  <div class="bg-gray-100 h-screen flex">
+  <div class="h-screen flex">
       <SidebarComponent class="lg:w-64" />
-      <div class="flex overflow-y-auto p-4 mx-auto flex-col lg:mt-5">
-          <h1 class="mx-auto">{{ crypto.name }} - {{ crypto.symbol }}</h1>
-          <p class="mx-auto">Valeur actuelle: {{ crypto.values[0].value }}</p>
+      <div class="flex flex-col m-auto text-center justify-center">
+          <h2 class="my-5 text-xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-lime-600 from-sky-400">{{ crypto.name }} - {{ crypto.symbol }}</span></h2>
+          <h3 class="mb-5 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white">Valeur actuelle: <mark class="px-2 text-white bg-lime-500 rounded">{{ crypto.values[0].value }}</mark></h3>
           <VueApexCharts
               width="700"
               type="line"
               :options="options"
               :series="series"
           ></VueApexCharts>
-          <p>Symbol: {{ crypto.symbol }}</p>
-          <!-- <p v-for="values in crypto.values" :key="values">{{ values }}</p> -->
       </div>
   </div>
 </template>

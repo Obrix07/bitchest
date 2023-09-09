@@ -46,6 +46,11 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
             return view('create-client');
         });
         Route::delete('/delete-client/{id}', 'AdminController@deleteClient')->name('admin.deleteClient');
+        Route::get('/list', function () {
+            return view('admin-crypto-list');
+        });
+    Route::get('/crypto/{id}', [CryptoController::class, 'showCryptoDetailAdmin']);
+
     });
 });
 

@@ -1,8 +1,17 @@
 <template>
-        <div class="bg-gray-100 h-screen flex">
-      <SidebarComponent class="lg:w-64" />
-      <div class="flex overflow-y-auto p-4 mx-auto flex-col lg:mt-5">
+        <div class="h-screen flex">
+      <AdminSidebar class="lg:w-64" />
+      <div class="flex flex-col m-auto text-center justify-center">
+            <h2 class="mt-5 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-lime-600 from-sky-400">Liste des clients</span></h2>
           <div class="m-auto mt-10 overflow-x-auto shadow-md sm:rounded-lg">
+            <div class="mb-4">
+        <input 
+            v-model="searchQuery"
+            type="text" 
+            placeholder="Rechercher par nom ou email..."
+            class="p-2 w-full border rounded"
+        >
+    </div>
               <table
                   class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
               >
@@ -19,7 +28,7 @@
                   <tbody>
                       <tr
                           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          v-for="item in list"
+                          v-for="item in filteredList"
                           :key="list.id"
                           @click="goToClientDetails(item.id)"
                       >
@@ -34,7 +43,7 @@
                           </td>
                           <td class="px-6 py-4">{{ item.wallet_balance }} €</td>
                           <td class="px-6 py-4 text-right">
-                              <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" @click.stop="deleteClient(item.id)">
+                              <button class="font-medium text-lime-600 hover:underline" @click.stop="deleteClient(item.id)">
                                   Supprimer
                               </button>
                           </td>
@@ -42,7 +51,7 @@
                   </tbody>
               </table>
           </div>
-          <div class="flex justify-center pt-2">
+          <div class="flex justify-center my-5">
               <button
                   class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
               >
@@ -83,13 +92,26 @@
 </template>
 
 <script>
-import SidebarComponent from "./SidebarComponent.vue";
+import AdminSidebar from "./AdminSidebar.vue";
 
 export default {
     data() {
         return {
             list: [],
+            searchQuery: '',
         };
+    },
+    computed: {
+        filteredList() {
+            if (this.searchQuery) {
+                const searchTerm = this.searchQuery.toLowerCase();
+                return this.list.filter(client => 
+                    client.name.toLowerCase().includes(searchTerm) || 
+                    client.email.toLowerCase().includes(searchTerm)
+                );
+            }
+            return this.list;
+        }
     },
     mounted() {
         axios.get("/api/clients").then((response) => {
@@ -118,6 +140,6 @@ export default {
                 });
         },
     },
-    components: { SidebarComponent },
+    components: { AdminSidebar },
 };
 </script>

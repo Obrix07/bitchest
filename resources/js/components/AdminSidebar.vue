@@ -20,20 +20,15 @@
             <div
                 class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800"
             >
-                <a
-                    href="https://flowbite.com/"
-                    class="flex items-center pl-2.5 mb-5"
-                >
                     <img
                         src="../../../public/images/bitchest_logo.png"
                         class="h-12 mr-3"
                         alt="Bitchest Logo"
                     />
-                </a>
                 <ul class="space-y-2 font-medium">
                     <li>
                         <a
-                            href="/"
+                            href="/admin"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                         >
                             <svg
@@ -50,12 +45,12 @@
                                     d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"
                                 />
                             </svg>
-                            <span class="ml-3">Dashboard</span>
+                            <span class="ml-3">Liste des clients</span>
                         </a>
                     </li>
                     <li>
                         <a
-                            href="/list"
+                            href="/admin/list"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                         >
                             <svg
@@ -99,11 +94,6 @@
                         </div>
                     </li>
                 </ul>
-                <div class="p-4">
-                    <p class="mb-4 text-lime-500">
-                        Votre solde est de: <span class="font-bold">{{ balance }}€</span>
-                    </p>
-                </div>
             </div>
 
             <!-- <button @click="isOpen = false" class="lg:hidden px-4 py-2 absolute top-2 right-2 text-sky-600 hover:text-lime-500">
