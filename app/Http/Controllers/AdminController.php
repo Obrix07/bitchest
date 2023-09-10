@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cryptocurrency;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -55,16 +54,5 @@ public function showClient($id) {
     $client = User::findOrFail($id);
     return view('client-details', ['client' => $client->toJson()]);
 }
-
-// public function getAllCryptos()
-//     {
-//         $cryptos = Cryptocurrency::select(
-//             'id',
-//             'name',
-//             'symbol',
-//             DB::raw("(SELECT value FROM cryptovalues WHERE cryptocurrencies.id = cryptovalues.cryptocurrency_id ORDER BY value_date DESC LIMIT 1) as latest_value")
-//         )->get();
-//         return response()->json($cryptos);
-//     }
 
 }

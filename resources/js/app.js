@@ -10,9 +10,10 @@ import CreateClient from './components/CreateClient.vue';
 import DashboardComponent from './components/DashboardComponent.vue';
 import CryptoList from './components/CryptoList.vue';
 import AdminCryptoList from './components/AdminCryptoList.vue';
-import CryptoDetail from './components/AdminCryptoDetail.vue';
-import AdminCryptoDetail from './components/CryptoDetail.vue';
+import CryptoDetail from './components/CryptoDetail.vue';
+import AdminCryptoDetail from './components/AdminCryptoDetail.vue';
 import SidebarComponent from './components/SidebarComponent.vue';
+import AdminSidebar from './components/AdminSidebar.vue';
 
 // import VueApexCharts from 'vue-apexcharts'
 import VueApexCharts from "vue3-apexcharts";
@@ -33,6 +34,7 @@ const app = createApp({
       AdminCryptoDetail,
       VueApexCharts,
       SidebarComponent,
+      AdminSidebar,
     },
   });
 

@@ -54,15 +54,15 @@
                                 {{ crypto.name }}
                             </th>
                             <td class="px-6 py-4">
-                                {{ crypto.quantity }}
+                                {{ currencyFormatter(crypto.quantity) }}
                             </td>
-                            <td class="px-6 py-4">{{ crypto.latest_value }}</td>
+                            <td class="px-6 py-4">{{ currencyFormatter(crypto.latest_value) }} €</td>
                             <td class="px-6 py-4">
                                 {{
-                                    (
+                                    currencyFormatter(
                                         crypto.latest_value * crypto.quantity
-                                    ).toFixed(2)
-                                }}
+                                    )
+                                }} €
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <button
@@ -83,7 +83,7 @@
                 <small
                     class="ml-2 font-semibold text-gray-500 dark:text-gray-400"
                     >Total des actifs en crypto : </small
-                >{{ totalCryptoValue.toFixed(2) }}€
+                >{{ currencyFormatter(totalCryptoValue) }} €
             </p>
             <hr />
             <!-- <h2>Historique des transactions</h2> -->
@@ -172,18 +172,18 @@
                                 <p class="text-lime-500">Vente</p>
                             </td>
                             <td class="px-6 py-4">
-                                {{ transaction.quantity }}
+                                {{ currencyFormatter(transaction.quantity) }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ transaction.value_at_time }}
+                                {{ currencyFormatter(transaction.value_at_time) }} €
                             </td>
                             <td class="px-6 py-4">
                                 {{
-                                    (
+                                    currencyFormatter(
                                         transaction.value_at_time *
                                         transaction.quantity
-                                    ).toFixed(2)
-                                }}
+                                    )
+                                }} €
                             </td>
                             <td class="px-6 py-4">
                                 {{ dateFormatter(transaction.created_at) }}
@@ -217,7 +217,6 @@ export default {
     mounted() {
         axios.defaults.withCredentials = true;
         axios.get("/sanctum/csrf-cookie").then(() => {
-            // Login...
             axios.get("/api/client/dashboard").then((response) => {
                 this.balance = response.data.balance;
                 this.cryptos = response.data.cryptos;
@@ -280,6 +279,26 @@ export default {
                         console.error("Une erreur s'est produite:", error);
                     });
                 location.reload();
+            }
+        },
+        currencyFormatter(value) {
+            try {
+                const numberValue = Number(value); // Convertit la valeur en number
+                if (isNaN(numberValue)) {
+                    console.error("Value provided is not a number:", value);
+                    return "";
+                }
+
+                const fixed = numberValue.toFixed(2);
+                const [intpart, digits] = fixed.split(".");
+                const formattedIntPart = intpart.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    "\u00A0"
+                );
+                return `${formattedIntPart},${digits}`;
+            } catch (e) {
+                console.error("Error in currencyFormatter:", e);
+                return "";
             }
         },
         toggleSortOrder() {

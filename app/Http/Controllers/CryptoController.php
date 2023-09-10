@@ -33,11 +33,11 @@ public function getValues($id) {
     $crypto = Cryptocurrency::with('values')->find($id);
     return response()->json(['values' => $crypto->values->pluck('value')]);
 }
-public function showCryptoDetail($id) {
-    $crypto = Cryptocurrency::with('values')->findOrFail($id);
-    return view('crypto-detail', ['crypto' => $crypto]);
-}
 public function showCryptoDetailAdmin($id) {
+    $crypto = Cryptocurrency::with('values')->findOrFail($id);
+    return view('admin-crypto-detail', ['crypto' => $crypto]);
+}
+public function showCryptoDetail($id) {
     $crypto = Cryptocurrency::with('values')->findOrFail($id);
     return view('crypto-detail', ['crypto' => $crypto]);
 }

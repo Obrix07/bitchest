@@ -41,7 +41,7 @@
                           <td class="px-6 py-4">
                               {{ item.email }}
                           </td>
-                          <td class="px-6 py-4">{{ item.wallet_balance }} €</td>
+                          <td class="px-6 py-4">{{ currencyFormatter(item.wallet_balance) }} €</td>
                           <td class="px-6 py-4 text-right">
                               <button class="font-medium text-lime-600 hover:underline" @click.stop="deleteClient(item.id)">
                                   Supprimer
@@ -53,7 +53,7 @@
           </div>
           <div class="flex justify-center my-5">
               <button
-                  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+                  class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-sky-400 to-lime-600 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
               >
                   <span
                       class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
@@ -138,6 +138,26 @@ export default {
                 .catch((error) => {
                     alert("Une erreur s'est produite");
                 });
+        },
+        currencyFormatter(value) {
+            try {
+                const numberValue = Number(value); // Convertit la valeur en number
+                if (isNaN(numberValue)) {
+                    console.error("Value provided is not a number:", value);
+                    return "";
+                }
+
+                const fixed = numberValue.toFixed(2);
+                const [intpart, digits] = fixed.split(".");
+                const formattedIntPart = intpart.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    "\u00A0"
+                );
+                return `${formattedIntPart},${digits}`;
+            } catch (e) {
+                console.error("Error in currencyFormatter:", e);
+                return "";
+            }
         },
     },
     components: { AdminSidebar },

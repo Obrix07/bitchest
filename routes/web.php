@@ -29,6 +29,7 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/admin/profile', [ProfileController::class, 'editAdmin'])->name('profile.admin-edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
@@ -67,8 +68,8 @@ Route::middleware(['auth:sanctum', 'role:client'])->group(function () {
     Route::post('/api/sell-crypto', [ClientController::class, 'sellCrypto']);
     Route::get('/api/get-buying-price/{cryptoName}', [ClientController::class, 'getBuyingPrice']);
     Route::get('/api/current-price/{cryptoName}', [ClientController::class, 'getCurrentPrice']);
-    Route::get('/crypto/{id}', [CryptoController::class, 'showDetail']);
-    Route::get('/crypto/{id}', [CryptoController::class, 'show'])->name('crypto.show');
+    // Route::get('/crypto/{id}', [CryptoController::class, 'showDetail']);
+    // Route::get('/crypto/{id}', [CryptoController::class, 'show'])->name('crypto.show');
     Route::get('/crypto/{id}', [CryptoController::class, 'showCryptoDetail']);
 
 

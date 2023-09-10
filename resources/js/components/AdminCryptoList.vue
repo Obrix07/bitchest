@@ -36,7 +36,7 @@
                                     {{ crypto.symbol }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ crypto.latest_value }}
+                                    {{ currencyFormatter(crypto.latest_value) }} €
                                 </td>
                             </tr>
                         </tbody>
@@ -62,6 +62,26 @@ export default {
     methods: {
         goToCryptoDetail(cryptoId) {
             window.location.href = `/admin/crypto/${cryptoId}`;
+        },
+        currencyFormatter(value) {
+            try {
+                const numberValue = Number(value); // Convertit la valeur en number
+                if (isNaN(numberValue)) {
+                    console.error("Value provided is not a number:", value);
+                    return "";
+                }
+
+                const fixed = numberValue.toFixed(2);
+                const [intpart, digits] = fixed.split(".");
+                const formattedIntPart = intpart.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    "\u00A0"
+                );
+                return `${formattedIntPart},${digits}`;
+            } catch (e) {
+                console.error("Error in currencyFormatter:", e);
+                return "";
+            }
         },
     },
     mounted() {
