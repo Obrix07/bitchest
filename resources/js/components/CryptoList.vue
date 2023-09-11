@@ -60,19 +60,37 @@
                         </tbody>
                     </table>
                 </div>
-
-                <div v-if="showModal">
-                    Combien de {{ currentCrypto.name }} souhaitez-vous acheter ?
-                    <input
-                        type="number"
-                        v-model="quantity"
-                        min="0"
-                        step="0.01"
-                    />
-                    <button @click="buyCrypto">Confirmer</button>
-                    <button @click="showModal = false">Annuler</button>
-                </div>
             </table>
+            <div
+                v-if="showModal"
+                class="flex flex-col relative mb-5 overflow-x-auto shadow-md sm:rounded-lg"
+            >
+                <p class="mt-4">
+                    Combien de "{{ currentCrypto.name }}" souhaitez-vous acheter
+                    ?
+                </p>
+                <input
+                    class="w-6/12 m-auto mt-4"
+                    type="number"
+                    v-model="quantity"
+                    min="0"
+                    step="0.1"
+                />
+                <div class="my-4">
+                    <button
+                        class="mx-3 font-medium text-lime-600 hover:underline"
+                        @click="buyCrypto"
+                    >
+                        Confirmer
+                    </button>
+                    <button
+                        class="mx-3 font-medium text-red-600 hover:underline"
+                        @click="showModal = false"
+                    >
+                        Annuler
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -115,6 +133,7 @@ export default {
                         error
                     );
                 });
+            location.reload();
         },
         currencyFormatter(value) {
             try {

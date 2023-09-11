@@ -43,11 +43,6 @@ public function deleteClient($id) {
     return response()->json(['message' => 'Client supprimé avec succès']);
 }
 
-public function getCryptocurrencies() {
-    $cryptos = Cryptocurrency::all();
-    return response()->json($cryptos);
-}
-
 // FRONT
 
 public function showClient($id) {

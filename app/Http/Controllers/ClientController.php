@@ -16,28 +16,22 @@ class ClientController extends Controller
 
     public function showDashboardData(Request $request)
     {
-        // $user = auth()->user();
-        // $user = $request->user();
-        // $user = User::where('role', 'client')->first();
-        // $user = User::where('id', auth()->user()->id)->where('role', 'client')->with('wallets')->first();
         $user = User::find($request->user()->id);
-
-
 
         if (!$user) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
 
+        $role = $user->role;
         $balance = $user->wallet_balance;
 
-        // dd($user->wallets()->toSql());
         // Récupérer les crypto-monnaies et leurs quantités associées à l'utilisateur
         $cryptos = $user->wallets()->with('cryptocurrency')->get()->map(function ($wallet) {
             $latest_value = DB::table('cryptovalues')
-                    ->where('cryptocurrency_id', $wallet->cryptocurrency_id)
-                    ->orderBy('value_date', 'desc')
-                    ->first()
-                    ->value;
+                ->where('cryptocurrency_id', $wallet->cryptocurrency_id)
+                ->orderBy('value_date', 'desc')
+                ->first()
+                ->value;
             return [
                 'name' => $wallet->cryptocurrency->name,
                 'quantity' => $wallet->quantity,
@@ -56,7 +50,7 @@ class ClientController extends Controller
             ];
         });
 
-        return response()->json(['balance' => $balance, 'cryptos' => $cryptos, 'transactions' => $transactions]);
+        return response()->json(['balance' => $balance, 'role' => $role, 'cryptos' => $cryptos, 'transactions' => $transactions]);
     }
 
     public function getAllCryptos()
@@ -124,7 +118,6 @@ class ClientController extends Controller
     {
         $client = auth()->user();
         return response()->json($client);
-        // return view('client-profile');
     }
 
     public function getWallet()
@@ -135,68 +128,67 @@ class ClientController extends Controller
     }
 
     public function sellCrypto(Request $request)
-{
-    $user = auth()->user();
-    $cryptoName = $request->input('name');
+    {
+        $user = auth()->user();
+        $cryptoName = $request->input('name');
 
-    // Trouver le portefeuille associé à cette crypto et à cet utilisateur
-    $wallet = Wallet::where('user_id', $user->id)
-                    ->whereHas('cryptocurrency', function ($query) use ($cryptoName) {
-                        $query->where('name', $cryptoName);
-                    })
-                    ->firstOrFail();
+        // Trouver le portefeuille associé à cette crypto et à cet utilisateur
+        $wallet = Wallet::where('user_id', $user->id)
+            ->whereHas('cryptocurrency', function ($query) use ($cryptoName) {
+                $query->where('name', $cryptoName);
+            })
+            ->firstOrFail();
 
-    // Récupérez la dernière valeur de la crypto-monnaie
-    $latestValue = DB::table('cryptovalues')
-                    ->where('cryptocurrency_id', $wallet->cryptocurrency_id)
-                    ->orderBy('value_date', 'desc')
-                    ->limit(1)
-                    ->first();
+        // Récupérez la dernière valeur de la crypto-monnaie
+        $latestValue = DB::table('cryptovalues')
+            ->where('cryptocurrency_id', $wallet->cryptocurrency_id)
+            ->orderBy('value_date', 'desc')
+            ->limit(1)
+            ->first();
 
-    // Calculer le revenu total de la vente
-    $totalRevenue = $latestValue->value * $wallet->quantity;
+        // Calculer le revenu total de la vente
+        $totalRevenue = $latestValue->value * $wallet->quantity;
 
-    // Mettre à jour le solde de l'utilisateur
-    $user->wallet_balance += $totalRevenue;
-    $user->save();
+        // Mettre à jour le solde de l'utilisateur
+        $user->wallet_balance += $totalRevenue;
+        $user->save();
 
-    // Enregistrer la transaction
-    $transaction = new Transaction([
-        'user_id' => $user->id,
-        'cryptocurrency_id' => $wallet->cryptocurrency_id,
-        'cryptovalues_id' => $latestValue->id,
-        'type' => 'sell',
-        'quantity' => $wallet->quantity,
-    ]);
-    $transaction->save();
+        // Enregistrer la transaction
+        $transaction = new Transaction([
+            'user_id' => $user->id,
+            'cryptocurrency_id' => $wallet->cryptocurrency_id,
+            'cryptovalues_id' => $latestValue->id,
+            'type' => 'sell',
+            'quantity' => $wallet->quantity,
+        ]);
+        $transaction->save();
 
-    // Supprimer ou mettre à jour le portefeuille
-    $wallet->delete();
+        // Supprimer ou mettre à jour le portefeuille
+        $wallet->delete();
 
-    return response()->json([
-        'message' => 'Vente réussie',
-        'balance' => $user->wallet_balance,
-        // Autres données nécessaires
-    ]);
-}
+        return response()->json([
+            'message' => 'Vente réussie',
+            'balance' => $user->wallet_balance,
+            // Autres données nécessaires
+        ]);
+    }
 
-public function getBuyingPrice($cryptoName)
-{
-    $transaction = Transaction::where('cryptocurrency_id', Cryptocurrency::where('name', $cryptoName)->first()->id)
-                              ->first();
-    $buyingPrice = Cryptovalues::find($transaction->cryptovalues_id)->value;
-  
-    return response()->json(['buyingPrice' => $buyingPrice]);
-}
+    public function getBuyingPrice($cryptoName)
+    {
+        $transaction = Transaction::where('cryptocurrency_id', Cryptocurrency::where('name', $cryptoName)->first()->id)
+            ->first();
+        $buyingPrice = Cryptovalues::find($transaction->cryptovalues_id)->value;
 
-public function getCurrentPrice($cryptoName)
-{
-    $currentPrice = Cryptovalues::where('cryptocurrency_id', Cryptocurrency::where('name', $cryptoName)->first()->id)
-                                ->orderBy('value_date', 'desc')
-                                ->first()
-                                ->value;
-  
-    return response()->json(['currentPrice' => $currentPrice]);
-}
+        return response()->json(['buyingPrice' => $buyingPrice]);
+    }
 
+    public function getCurrentPrice($cryptoName)
+    {
+        $currentPrice = Cryptovalues::where('cryptocurrency_id', Cryptocurrency::where('name', $cryptoName)->first()->id)
+            ->orderBy('value_date', 'desc')
+            ->first()
+            ->value;
+
+        return response()->json(['currentPrice' => $currentPrice]);
+    }
 }

@@ -2,9 +2,18 @@
     <div class="h-screen flex">
         <AdminSidebar class="lg:w-64" />
         <div class="flex flex-col m-auto text-center justify-center">
-            <h2 class="my-5 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-lime-600 from-sky-400">Liste des Cryptos</span></h2>
+            <h2
+                class="my-5 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"
+            >
+                <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r to-lime-600 from-sky-400"
+                    >Liste des Cryptos</span
+                >
+            </h2>
             <table class="mt-4">
-                <div class="relative mb-5 overflow-x-auto shadow-md sm:rounded-lg">
+                <div
+                    class="relative mb-5 overflow-x-auto shadow-md sm:rounded-lg"
+                >
                     <table
                         class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
                     >
@@ -36,7 +45,10 @@
                                     {{ crypto.symbol }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ currencyFormatter(crypto.latest_value) }} €
+                                    {{
+                                        currencyFormatter(crypto.latest_value)
+                                    }}
+                                    €
                                 </td>
                             </tr>
                         </tbody>

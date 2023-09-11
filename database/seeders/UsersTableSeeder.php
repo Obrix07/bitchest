@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -15,25 +17,27 @@ class UsersTableSeeder extends Seeder
     {
         // Seeder pour les admins
         User::create([
-            'name' => 'Admin1',
-            'email' => 'admin1@example.com',
+            'name' => 'Jerome',
+            'email' => 'jerome@admin.com',
             'password' => Hash::make('password'),
-            'role' => 'admin',  // Supposant que vous utilisez une colonne 'role' dans la table users
-        ]);
-
-        User::create([
-            'name' => 'Admin2',
-            'email' => 'admin2@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'admin',
+            'role' => 'admin', 
         ]);
 
         // Seeder pour les clients
-        for ($i = 1; $i <= 5; $i++) {
+        $users = [
+            ['name' => 'Alice Dupont', 'email' => 'alice.dupont@gmail.com'],
+            ['name' => 'Bruno Martin', 'email' => 'bruno.martin@gmail.com'],
+            ['name' => 'Claire Lefèvre', 'email' => 'claire.lefevre@gmail.com'],
+            ['name' => 'David Bernard', 'email' => 'david.bernard@gmail.com'],
+            ['name' => 'Eloïse Leroux', 'email' => 'eloise.leroux@gmail.com'],
+        ];
+        
+        foreach ($users as $user) {
             User::create([
-                'name' => 'Client' . $i,
-                'email' => 'client' . $i . '@example.com',
+                'name' => $user['name'],
+                'email' => $user['email'],
                 'password' => Hash::make('password'),
+                'wallet_balance' => rand(400, 2000),
                 'role' => 'client',
             ]);
         }

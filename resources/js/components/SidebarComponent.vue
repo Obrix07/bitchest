@@ -118,47 +118,6 @@
                     </p>
                 </div>
             </div>
-
-            <!-- <button @click="isOpen = false" class="lg:hidden px-4 py-2 absolute top-2 right-2 text-sky-600 hover:text-lime-500">
-                Fermer
-            </button>
-
-            <div class="p-4 text-xl font-bold border-b border-gray-700">
-                <img src="../../../public/images/bitchest_logo.png" alt="Bitchest Logo">
-            </div>
-            
-            <ul>
-                <li class="p-4 border-b border-gray-700 hover:bg-lime-700">
-                    <a href="#" class="flex items-center text-lime-500 hover:text-sky-600">
-                        <i class="mr-2 fas fa-coins"></i> Monnaies
-                    </a>
-                </li>
-                <li class="p-4 border-b border-gray-700 hover:bg-gray-700">
-                    <a href="#" class="flex items-center text-lime-500 hover:text-sky-600">
-                        <i class="mr-2 fas fa-chart-line"></i> Statistiques
-                    </a>
-                </li>
-                <li class="p-4 border-b border-gray-700 hover:bg-gray-700">
-                    <a href="#" class="flex items-center text-lime-500 hover:text-sky-600">
-                        <i class="mr-2 fas fa-wallet"></i> Mon Portefeuille
-                    </a>
-                </li>
-                <li class="p-4 border-b border-gray-700 hover:bg-gray-700">
-                    <a href="#" class="flex items-center text-lime-500 hover:text-sky-600">
-                        <i class="mr-2 fas fa-cogs"></i> Paramètres
-                    </a>
-                </li>
-            </ul>
-
-            <div class="p-4">
-                <p class="mb-4 text-lime-500">Votre solde est de: <span class="font-bold">1550€</span></p>
-                <form ref="logoutForm" method="POST" action="/logout" class="hidden">
-                    @csrf   
-                </form>
-                <button @click="logout" class="px-4 py-2 text-white bg-sky-600 hover:bg-lime-500 rounded">
-                    Déconnexion
-                </button>
-            </div> -->
         </div>
     </div>
 </template>
